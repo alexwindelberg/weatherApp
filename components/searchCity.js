@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { GooglePlacesInput } from './components/autoComplete';
 
 class SearchCity extends Component {

@@ -1,6 +1,8 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { getLocationAsync } from './utils/locationPermission'
+import React from 'react'
+import { StyleSheet, Text, View } from 'react-native'
+import { getLocationAsync } from './utils/getLocation'
+import NavBar from './components/navBar'
+import WeatherContainer from './components/weatherContainer'
 
 export default class App extends React.Component {
 
@@ -25,7 +27,8 @@ export default class App extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text> This is the results = {this.state.longitude} </Text>
+        <NavBar />
+        <WeatherContainer />
       </View>
     );
   }
@@ -34,9 +37,9 @@ export default class App extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingTop : 40
+    backgroundColor: 'orange',
   },
+
 });
+
+
