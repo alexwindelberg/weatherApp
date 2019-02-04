@@ -1,37 +1,33 @@
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
-import { createStore } from 'redux'
-import reducer from './reducers'
 import { getLocationAsync } from './utils/getLocation'
 import { getWeatherAsync } from './utils/getWeather'
 import NavBar from './components/navBar'
 import WeatherContainer from './components/weatherContainer'
+import { store } from './store'
+import { _setLoading, _setCurrentLocation } from './actions';
 
-
-const initialState = { isLoading : true, latitude : '', longitude : '', weatherList : [] };
-const store = createStore(reducer, initialState);
 
 export default class App extends React.Component {
 
   async componentDidMount() {
     
-    /*await getLocationAsync().then(d => {
-      const { latitude, longitude } = d.coords;
-
-      this.setState({
-        latitude : latitude,
-        longitude : longitude,
-      });
+    await getLocationAsync().then(d => {
+        const { latitude, longitude } = d.coords;
+        dispatchCurrentLocation(latitude, longitude);
     });
 
-    await getWeatherAsync(this.state.longitude, this.state.latitude).finally( (data) => {
+    /*await getWeatherAsync(this.state.longitude, this.state.latitude).finally( (data) => {
       this.setState({
         isLoading : false
       });
       console.log(data);
     });*/
 
+  }
 
+  componentWillMount () {
+    dispatchWeatherAction()
   }
 
 
@@ -61,4 +57,14 @@ const styles = StyleSheet.create({
 
 });
 
+function dispatchWeatherAction() {
+  store.dispatch(_setLoading(store.getState().isLoading));
+}
 
+function dispatchCurrentLocation(lat, lon) {
+  const location = {
+          latitude     : lat,
+          longitude    : lon
+  };
+  store.dispatch(_setCurrentLocation(location));
+}
