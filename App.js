@@ -1,34 +1,54 @@
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import { getLocationAsync } from './utils/getLocation'
+import { getWeatherAsync } from './utils/getWeather'
 import NavBar from './components/navBar'
 import WeatherContainer from './components/weatherContainer'
 
 export default class App extends React.Component {
 
   state = {
-    isLoading  : false,
+    isLoading  : true,
     latitude   : '',
     longitude  : '',
+    weatherConditions : [],
   };
 
   async componentDidMount() {
+    
     await getLocationAsync().then(d => {
       const { latitude, longitude } = d.coords;
 
       this.setState({
         latitude : latitude,
-        longitude : longitude
+        longitude : longitude,
       });
     });
-    
+
+    await getWeatherAsync(this.state.longitude, this.state.latitude).finally( (data) => {
+      this.setState({
+        isLoading : false
+      });
+      console.log(data);
+    });
+
   }
+
 
   render() {
     return (
       <View style={styles.container}>
         <NavBar />
-        <WeatherContainer />
+
+        { this.state.isLoading ? 
+          (
+            <Text>Loading...</Text>
+          ) : 
+          (
+            <WeatherContainer />
+          )
+         }
+
       </View>
     );
   }

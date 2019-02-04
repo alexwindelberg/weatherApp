@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
-const navigationBar = () => {
+class NavigationBar extends Component {
+    render () {
     return (
         <View>
           <View style={styles.toolbar}>
@@ -11,6 +12,7 @@ const navigationBar = () => {
           </View>
         </View>
       );
+    }
 }
 
 var styles = StyleSheet.create({
@@ -18,11 +20,11 @@ var styles = StyleSheet.create({
       backgroundColor:'#81c04d',
       paddingTop:30,
       paddingBottom:10,
-      flexDirection:'row',   //Step 1
+      flexDirection:'row',   
       height : 70
   },
   toolbarButton:{
-      width: 50,            //Step 2
+      width: 50,            
       color:'#fff',
       textAlign:'center'
   },
@@ -30,10 +32,10 @@ var styles = StyleSheet.create({
       color:'#fff',
       textAlign:'center',
       fontWeight:'bold',
-      flex:1                //Step 3
+      flex:1               
   }
 });
   
   
 
-export default navigationBar;
+export default NavigationBar;
