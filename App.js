@@ -1,22 +1,21 @@
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
+import { createStore } from 'redux'
+import reducer from './reducers'
 import { getLocationAsync } from './utils/getLocation'
 import { getWeatherAsync } from './utils/getWeather'
 import NavBar from './components/navBar'
 import WeatherContainer from './components/weatherContainer'
 
-export default class App extends React.Component {
 
-  state = {
-    isLoading  : true,
-    latitude   : '',
-    longitude  : '',
-    weatherConditions : [],
-  };
+const initialState = { isLoading : true, latitude : '', longitude : '', weatherList : [] };
+const store = createStore(reducer, initialState);
+
+export default class App extends React.Component {
 
   async componentDidMount() {
     
-    await getLocationAsync().then(d => {
+    /*await getLocationAsync().then(d => {
       const { latitude, longitude } = d.coords;
 
       this.setState({
@@ -30,7 +29,8 @@ export default class App extends React.Component {
         isLoading : false
       });
       console.log(data);
-    });
+    });*/
+
 
   }
 
@@ -40,7 +40,7 @@ export default class App extends React.Component {
       <View style={styles.container}>
         <NavBar />
 
-        { this.state.isLoading ? 
+        { store.getState().isLoading ? 
           (
             <Text>Loading...</Text>
           ) : 
