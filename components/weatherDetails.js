@@ -17,12 +17,15 @@ const weatherDetails = () => {
 var styles = StyleSheet.create({
     messageBox:{
         backgroundColor:'#ef553a',
-        width:300,
-        paddingTop:10,
-        paddingBottom:20,
-        paddingLeft:20,
-        paddingRight:20, 
-        borderRadius:10
+        width: 'auto',
+        paddingTop:5,
+        paddingBottom:5,
+        paddingLeft:10,
+        paddingRight:10, 
+        borderRadius:10,
+        marginTop : 10,
+        marginLeft : 5,
+        marginRight : 5
     },
     messageBoxTitleText:{
         fontWeight:'bold',
