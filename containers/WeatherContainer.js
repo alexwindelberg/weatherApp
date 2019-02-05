@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 import { connect } from 'react-redux'
 import WeatherDetails from '../components/weatherDetails'
+import NavBar from '../components/navBar'
 import { getLocationAsync, getWeatherAsync } from '../utils/weatherFuncs'
 import { _setLoading, _setCurrentLocation } from '../actions'
 
@@ -18,15 +19,16 @@ class WeatherContainer extends Component {
     
         await getLocationAsync().then(d => {
             const { latitude, longitude } = d.coords;
-            const coordinate = {
+            const coordinates = {
                 latitude, 
                 longitude
             }
-            this.props.setCoordinates(coordinate);
+            this.props.setCoordinates(coordinates);
         });
     
         
         await getWeatherAsync(this.props.current_local.latitude, this.props.current_local.longitude).finally( (data) => {
+            console.log(this.props.current_local);
             console.log(data);
             this.props.setIsLoading();
         });
@@ -39,6 +41,7 @@ class WeatherContainer extends Component {
     render () {
         return (    
             <View style={styles.content}>
+                <NavBar />
                 { this.props.loading ? 
                     (
                         <Text>Loading...</Text>
@@ -55,8 +58,7 @@ class WeatherContainer extends Component {
 const styles = StyleSheet.create({
     content:{
         backgroundColor :  '#ebeef0',
-        flex            :  1,
-        alignItems      :  'center'    
+        flex            :  1, 
     }
 });
 
