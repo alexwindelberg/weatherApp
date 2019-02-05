@@ -1,17 +1,10 @@
 import React, { Component } from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 import { connect } from 'react-redux'
-import WeatherDetails from '../components/weatherDetails'
+import WeatherDetails from '../components/WeatherDetails'
 import NavBar from '../components/navBar'
-import { getLocationAsync, getWeatherAsync } from '../utils/weatherFuncs'
-import { _setLoading, _setCurrentLocation } from '../actions'
+import { getLocationAsync, getWeatherAsync, getCityAsync } from '../utils/weatherFuncs'
 
-
-// I'm thinking im going to take from App and make this component a class and a container folder for it,
-// once this is done we need to figure out which peices of data need to move and split them to be handled
-// to redux, the reason I'm considering promoting this component is because the high component in our case
-// App.js needs to be wrapped with <Provider > and I'm not sure if aync functions to get my data will
-// be able to get attained and trigger Provider properly
 
 class WeatherContainer extends Component {
 
@@ -27,15 +20,25 @@ class WeatherContainer extends Component {
         });
     
         
-        await getWeatherAsync(this.props.current_local.latitude, this.props.current_local.longitude).finally( (data) => {
-            console.log(this.props.current_local);
-            console.log(data);
-            this.props.setIsLoading();
+        await getWeatherAsync(this.props.current_local.latitude, this.props.current_local.longitude).then( (data) => {
+            
+            const { id }      = data.sys       
+            const icon        = data.weather[0].icon      
+            const wId         = data.weather[0].id  
+            const { temp }    = data.main
+            const weatherData = {
+                id,
+                icon,
+                wId,
+                temp,
+            }
+            // store data into redux
         });
-    }
 
-    componentWillMount() {
-        //console.log(this.props.lat);
+        await getCityAsync (this.props.current_local.latitude, this.props.current_local.longitude).then((data) => {
+            console.log(data.results[1].formatted_address);
+            this.props.setIsLoading();
+        })
     }
 
     render () {
@@ -57,23 +60,25 @@ class WeatherContainer extends Component {
 
 const styles = StyleSheet.create({
     content:{
-        backgroundColor :  '#ebeef0',
-        flex            :  1, 
+        backgroundColor    : '#ebeef0',
+        flex               : 1, 
     }
 });
 
 
 const mapStateToProps = state => {
     return {
-        loading           : state.isLoading,
+        loading            : state.isLoading,
         current_local      : state.currentLocation,
+        weather            : state.weatherList,
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        setIsLoading   : () => dispatch({type: 'SET_LOADING'}),
-        setCoordinates : (loc) => dispatch({type: 'SET_CURRENT_LOCATION', c_location : loc}),
+        setIsLoading       : ()    => dispatch({type : 'SET_LOADING'}),
+        setCoordinates     : (loc) => dispatch({type : 'SET_CURRENT_LOCATION', c_location : loc}),
+        setWeather_CL      : ()    => dispatch({type : 'SET_WEATHER_CL'}),
     }
 }
 

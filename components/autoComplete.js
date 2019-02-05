@@ -1,7 +1,6 @@
 import React from 'react';
-import { Text, View, Image } from 'react-native';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
-import { googlePlaces_API } from '../utils/apiKeys';
+import { google_API } from '../utils/apiKeys';
 
 
 const homePlace = { description: 'Home', geometry: { location: { lat: 48.8152937, lng: 2.4597668 } }};
@@ -23,7 +22,7 @@ export const GooglePlacesInput = () => {
         }}
         query={{
           // available options: https://developers.google.com/places/web-service/autocomplete
-          key: googlePlaces_API,
+          key: google_API,
           language: 'en', // language of the results
           types: '(cities)', // default: 'geocode'
         }}
