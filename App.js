@@ -17,17 +17,13 @@ export default class App extends React.Component {
         dispatchCurrentLocation(latitude, longitude);
     });
 
-    /*await getWeatherAsync(this.state.longitude, this.state.latitude).finally( (data) => {
-      this.setState({
-        isLoading : false
-      });
-      console.log(data);
-    });*/
-
+    await getWeatherAsync(store.getState().currentLocation.latitude, store.getState().currentLocation.longitude).finally( (data) => {
+        dispatchLoadingAction();
+    });
   }
 
   componentWillMount () {
-    dispatchWeatherAction()
+
   }
 
 
@@ -54,10 +50,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-
 });
 
-function dispatchWeatherAction() {
+function dispatchLoadingAction() {
   store.dispatch(_setLoading(store.getState().isLoading));
 }
 

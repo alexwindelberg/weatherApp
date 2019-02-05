@@ -2,7 +2,6 @@ import { combineReducers } from 'redux'
 
 export default (state, action) => {
 
-    console.log(action.currentLocation);
     switch (action.type) {
 
         case "SET_LOADING":
