@@ -1,20 +1,26 @@
 import { combineReducers } from 'redux'
+//latitude, longitude, 
+const initialState = { 
+    isLoading        : true,
+    currentLocation  : {},
+    weatherList      : [],
+    cities           : [], 
+};
 
-export default (state, action) => {
+export default (state = initialState, action) => {
 
     switch (action.type) {
-
-        case "SET_LOADING":
+        case 'SET_LOADING':
             return {
                 ...state,
-                isLoading : !action.loading
+                isLoading : !state.isLoading
             }
-        case "SET_CURRENT_LOCATION":
+        case 'SET_CURRENT_LOCATION':
             return {
                 ...state,
-                currentLocation : action.currentLocation
+                currentLocation : Object.assign({}, action.c_location)
             }
-        default: 
-            return state;
     }
+
+    return state;
 }
