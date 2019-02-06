@@ -1,16 +1,30 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, Button } from 'react-native'
 import { connect } from 'react-redux'
 import WeatherDetails from '../components/WeatherDetails'
-import CitySearch from '../components/searchCity'
 import NavBar from '../components/navBar'
 import { getLocationAsync, getWeatherAsync, getCityAsync } from '../utils/weatherFuncs'
 
 
 class WeatherContainer extends Component {
 
+    static navigationOptions = ({ navigation }) => {
+        return {
+            title: 'Home',
+            headerRight: (
+                <Button
+                onPress={() => navigation.navigate('Search')}
+                title="Search"
+                color="#f4511e"
+                />
+            ),
+        }
+    };
+
     async componentDidMount() {
 
+        // If the page is reloaded redux remembers we have to find out if we have reloaded and reset 
+        // loading
         await getLocationAsync().then(d => {
             const { latitude, longitude } = d.coords;
             const coordinates = {
@@ -20,7 +34,7 @@ class WeatherContainer extends Component {
             this.props.setCoordinates(coordinates);
         });
 
-        const results = await getWeatherAsync(this.props.current_local.latitude, this.props.current_local.longitude).finally((data) => {
+        const results = await getWeatherAsync(this.props.current_local.latitude, this.props.current_local.longitude).then((data) => {
             
             const { id }             = data.sys       
             const icon               = data.weather[0].icon   
@@ -35,7 +49,7 @@ class WeatherContainer extends Component {
             return weatherData;
         });
 
-        await getCityAsync (this.props.current_local.latitude, this.props.current_local.longitude).finally((data) => {
+        await getCityAsync (this.props.current_local.latitude, this.props.current_local.longitude).then((data) => {
             const city              = data.results[1].address_components[3].long_name
             const state             = data.results[1].address_components[5].short_name
             const country           = data.results[1].address_components[6].short_name
@@ -59,29 +73,16 @@ class WeatherContainer extends Component {
                     <Text>{city}</Text> )) }
         </View>
     )
-    searchScreen = () => (
-        <View>
-            <CitySearch />
-        </View>
-    )
-    detailsScreen = () => (
-        <View>
-
-        </View>
-    )
-    determineScreen () {
         
-    }
-        
-    // maybe pass a callback to set the stuff
     render () {
+
         return (    
             <View style={styles.content}>
-                <NavBar />
                 { this.props.loading ? 
                     (
                         <Text>Loading...</Text>
-                    ) : 
+                    ) 
+                        : 
                     (
                         this.initialScreen()
                     )
@@ -112,7 +113,7 @@ const mapDispatchToProps = dispatch => {
         setIsLoading              : ()              => dispatch({type : 'SET_LOADING'}),
         setCoordinates            : (loc)           => dispatch({type : 'SET_CURRENT_LOCATION', c_location : loc}),
         addCurrentWeatherDetails  : (cwDetails)      => dispatch({type : 'ADD_CURRENT_WEATHER_DETAILS', cl_weather : cwDetails}),
-        addDummy  : () =>  dispatch({type : 'DUMMY_DATA'}),
+        
     }
 }
 

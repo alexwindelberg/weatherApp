@@ -21,7 +21,7 @@ class WeatherDetails extends Component {
 
 var styles = StyleSheet.create({
     weatherBox          : {
-        backgroundColor : '#ef553a',
+        backgroundColor : '#f4511e',
         width           : 'auto',
         paddingTop      : 10,
         paddingBottom   : 5,

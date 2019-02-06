@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { GooglePlacesInput } from './autoComplete';
+import { Button } from 'react-native'
+import { GooglePlacesInput } from '../components/autoComplete';
 
 class SearchCity extends Component {
     
