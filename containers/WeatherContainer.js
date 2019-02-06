@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { View, Text, StyleSheet, Button } from 'react-native'
 import { connect } from 'react-redux'
 import WeatherDetails from '../components/WeatherDetails'
-import NavBar from '../components/navBar'
 import { getLocationAsync, getWeatherAsync, getCityAsync } from '../utils/weatherFuncs'
 
 
@@ -113,7 +112,7 @@ const mapDispatchToProps = dispatch => {
         setIsLoading              : ()              => dispatch({type : 'SET_LOADING'}),
         setCoordinates            : (loc)           => dispatch({type : 'SET_CURRENT_LOCATION', c_location : loc}),
         addCurrentWeatherDetails  : (cwDetails)      => dispatch({type : 'ADD_CURRENT_WEATHER_DETAILS', cl_weather : cwDetails}),
-        
+
     }
 }
 
