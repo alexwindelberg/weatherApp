@@ -6,13 +6,13 @@ class WeatherDetails extends Component {
 
     render () {
         return (
-            <View style={styles.messageBox}>
+            <View style={styles.weatherBox}>
                 <View> 
-                    <Text  style={styles.messageBoxTitleText} >A simple mesage</Text>
-                    <Image style={{width: 50, height: 50}} source={{uri: 'http://openweathermap.org/img/w/10d.png'}} />
+                    <Text style={styles.weatherDetailsBox}>  { Math.ceil(this.props.currentWeather.temp) }° </Text>
+                    <Text style={styles.locationDetails} >  { this.props.currentWeather.city }, { this.props.currentWeather.state }, { this.props.currentWeather.country } </Text>
                 </View>
                 <View>
-                    <Text style={styles.messageBoxBodyText}>This is just a dummy sample it will help us to see the alignment in action.</Text>
+                    <Image style={{width: 50, height: 50, marginLeft: 100}} source={{uri: "http://openweathermap.org/img/w/" + this.props.currentWeather.icon + ".png" }} />
                 </View>
             </View>
         )
@@ -20,38 +20,40 @@ class WeatherDetails extends Component {
 }
 
 var styles = StyleSheet.create({
-    messageBox:{
+    weatherBox          : {
         backgroundColor : '#ef553a',
         width           : 'auto',
         paddingTop      : 10,
         paddingBottom   : 5,
         paddingLeft     : 20,
         paddingRight    : 20,
-        height          : 150,
+        height          : 100,
+        flexDirection   : 'row',
     },
-    messageBoxTitleText:{
+    weatherDetailsBox   : {
         fontWeight      : 'bold',
         color           : '#fff',
-        textAlign       : 'center',
-        fontSize        : 20,
-        marginBottom    : 10
+        textAlign       : 'left',
+        fontSize        : 30,
+        marginBottom    : 3,
     },
-    messageBoxBodyText:{
+    locationDetails     : {
         color           : '#fff',
-        fontSize        : 16
+        fontSize        : 16,
+        marginLeft      : 6
     }
 });
 
 const mapStateToProps = state => {
     return {
         current_local   : state.currentLocation,
+        currentWeather  : state.currentFocusedWeather,
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        setCoordinates  : (loc) => dispatch({type: 'GET_CURRENT_LOCATION', c_location : loc}),
-        //get weather details for cl
+        retriveCurrentWeather  : () => dispatch({type: 'GET_CURRENT_WEATHER'}),
     }
 }
 

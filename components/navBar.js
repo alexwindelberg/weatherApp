@@ -17,7 +17,7 @@ class NavigationBar extends Component {
 
 var styles = StyleSheet.create({
   toolbar:{
-      backgroundColor:'#81c04d',
+      backgroundColor:'orange',
       paddingTop:30,
       paddingBottom:10,
       flexDirection:'row',   

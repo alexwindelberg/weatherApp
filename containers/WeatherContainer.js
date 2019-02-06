@@ -9,7 +9,7 @@ import { getLocationAsync, getWeatherAsync, getCityAsync } from '../utils/weathe
 class WeatherContainer extends Component {
 
     async componentDidMount() {
-    
+
         await getLocationAsync().then(d => {
             const { latitude, longitude } = d.coords;
             const coordinates = {
@@ -18,27 +18,37 @@ class WeatherContainer extends Component {
             }
             this.props.setCoordinates(coordinates);
         });
-    
-        
-        await getWeatherAsync(this.props.current_local.latitude, this.props.current_local.longitude).then( (data) => {
+
+        const results = await getWeatherAsync(this.props.current_local.latitude, this.props.current_local.longitude).finally((data) => {
             
-            const { id }      = data.sys       
-            const icon        = data.weather[0].icon      
-            const wId         = data.weather[0].id  
-            const { temp }    = data.main
-            const weatherData = {
+            const { id }             = data.sys       
+            const icon               = data.weather[0].icon   
+            const wId                = data.weather[0].id  
+            const { temp }           = data.main
+            const weatherData        = {
                 id,
                 icon,
                 wId,
                 temp,
             }
-            // store data into redux
+            return weatherData;
         });
 
-        await getCityAsync (this.props.current_local.latitude, this.props.current_local.longitude).then((data) => {
-            console.log(data.results[1].formatted_address);
+        await getCityAsync (this.props.current_local.latitude, this.props.current_local.longitude).finally((data) => {
+            const city              = data.results[1].address_components[3].long_name
+            const state             = data.results[1].address_components[5].short_name
+            const country           = data.results[1].address_components[6].short_name
+            const w_details = {
+                ...results,
+                city,
+                state,
+                country
+            }
+            console.log(w_details);
+            this.props.addCurrentWeatherDetails(w_details);
             this.props.setIsLoading();
         })
+
     }
 
     render () {
@@ -50,7 +60,7 @@ class WeatherContainer extends Component {
                         <Text>Loading...</Text>
                     ) : 
                     (
-                        <WeatherDetails/>
+                        <WeatherDetails />
                     )
                 }
             </View>
@@ -70,15 +80,14 @@ const mapStateToProps = state => {
     return {
         loading            : state.isLoading,
         current_local      : state.currentLocation,
-        weather            : state.weatherList,
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        setIsLoading       : ()    => dispatch({type : 'SET_LOADING'}),
-        setCoordinates     : (loc) => dispatch({type : 'SET_CURRENT_LOCATION', c_location : loc}),
-        setWeather_CL      : ()    => dispatch({type : 'SET_WEATHER_CL'}),
+        setIsLoading              : ()              => dispatch({type : 'SET_LOADING'}),
+        setCoordinates            : (loc)           => dispatch({type : 'SET_CURRENT_LOCATION', c_location : loc}),
+        addCurrentWeatherDetails  : (cwDetails)      => dispatch({type : 'ADD_CURRENT_WEATHER_DETAILS', cl_weather : cwDetails}),
     }
 }
 
