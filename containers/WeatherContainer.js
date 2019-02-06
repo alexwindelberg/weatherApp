@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 import { connect } from 'react-redux'
 import WeatherDetails from '../components/WeatherDetails'
+import CitySearch from '../components/searchCity'
 import NavBar from '../components/navBar'
 import { getLocationAsync, getWeatherAsync, getCityAsync } from '../utils/weatherFuncs'
 
@@ -51,6 +52,28 @@ class WeatherContainer extends Component {
 
     }
 
+    initialScreen = () => (
+        <View>
+            <WeatherDetails />
+            { this.props.cityList.map(city => (
+                    <Text>{city}</Text> )) }
+        </View>
+    )
+    searchScreen = () => (
+        <View>
+            <CitySearch />
+        </View>
+    )
+    detailsScreen = () => (
+        <View>
+
+        </View>
+    )
+    determineScreen () {
+        
+    }
+        
+    // maybe pass a callback to set the stuff
     render () {
         return (    
             <View style={styles.content}>
@@ -60,7 +83,7 @@ class WeatherContainer extends Component {
                         <Text>Loading...</Text>
                     ) : 
                     (
-                        <WeatherDetails />
+                        this.initialScreen()
                     )
                 }
             </View>
@@ -80,6 +103,7 @@ const mapStateToProps = state => {
     return {
         loading            : state.isLoading,
         current_local      : state.currentLocation,
+        cityList           : state.weatherList,
     };
 };
 
@@ -88,6 +112,7 @@ const mapDispatchToProps = dispatch => {
         setIsLoading              : ()              => dispatch({type : 'SET_LOADING'}),
         setCoordinates            : (loc)           => dispatch({type : 'SET_CURRENT_LOCATION', c_location : loc}),
         addCurrentWeatherDetails  : (cwDetails)      => dispatch({type : 'ADD_CURRENT_WEATHER_DETAILS', cl_weather : cwDetails}),
+        addDummy  : () =>  dispatch({type : 'DUMMY_DATA'}),
     }
 }
 

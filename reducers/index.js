@@ -23,15 +23,19 @@ export default (state = initialState, action) => {
         case 'ADD_CURRENT_WEATHER_DETAILS' : 
             return {
                 ...state,
-                currentFocusedWeather      : Object.assign({}, action.cl_weather)
+                currentFocusedWeather      : Object.assign({}, action.cl_weather),
             }
-        case 'ADD_WEATHER_DETAILS'         :
-            // In the near future we have to check that we aren't adding
-            // Cities already in the array 
+        case 'ADD_WEATHER_DETAILS_TO_LIST'         :
             return {
                 ...state,
-                weatherList                : state.weatherList.concat(action.a_weather)
+                weatherList                : state.weatherList.concat({ uniqueId: new Date(), cityWeather: action.storeCityDetails })
             }
+        case 'DUMMY_DATA'   : {
+            return {
+                ...state,
+                weatherList   :  new Array("New York", "Miami", "Orlando") 
+            }
+        }
     }
 
     return state;

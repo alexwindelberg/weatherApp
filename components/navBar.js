@@ -6,7 +6,7 @@ class NavigationBar extends Component {
     return (
         <View>
           <View style={styles.toolbar}>
-              <Text style={styles.toolbarButton}></Text>
+              <Text style={styles.toolbarButton}>Home</Text>
               <Text style={styles.toolbarTitle}>Alex Weather App</Text>
               <Text style={styles.toolbarButton}>City</Text>
           </View>
@@ -21,7 +21,7 @@ var styles = StyleSheet.create({
       paddingTop:30,
       paddingBottom:10,
       flexDirection:'row',   
-      height : 70
+      height : 80
   },
   toolbarButton:{
       width: 50,            
