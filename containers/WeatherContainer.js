@@ -35,14 +35,13 @@ class WeatherContainer extends Component {
 
         const results = await getWeatherAsync(this.props.current_local.latitude, this.props.current_local.longitude).then((data) => {
             
-            const { id }             = data.sys       
+            //const { id }             = data.sys       
+            //const wId                = data.weather[0].id 
+             
             const icon               = data.weather[0].icon   
-            const wId                = data.weather[0].id  
             const { temp }           = data.main
             const weatherData        = {
-                id,
                 icon,
-                wId,
                 temp,
             }
             return weatherData;
@@ -58,9 +57,9 @@ class WeatherContainer extends Component {
                 state,
                 country
             }
-            console.log(w_details);
             this.props.addCurrentWeatherDetails(w_details);
-            this.props.setIsLoading();
+            //this.props.resetData();
+            //this.props.setIsLoading();
         })
 
     }
@@ -68,8 +67,6 @@ class WeatherContainer extends Component {
     initialScreen = () => (
         <View>
             <WeatherDetails />
-            { this.props.cityList.map(city => (
-                    <Text>{city}</Text> )) }
         </View>
     )
         
@@ -111,8 +108,8 @@ const mapDispatchToProps = dispatch => {
     return {
         setIsLoading              : ()              => dispatch({type : 'SET_LOADING'}),
         setCoordinates            : (loc)           => dispatch({type : 'SET_CURRENT_LOCATION', c_location : loc}),
-        addCurrentWeatherDetails  : (cwDetails)      => dispatch({type : 'ADD_CURRENT_WEATHER_DETAILS', cl_weather : cwDetails}),
-
+        addCurrentWeatherDetails  : (cwDetails)     => dispatch({type : 'ADD_LOCAL_WEATHER_DETAILS', cl_weather : cwDetails}),
+        resetData                 : ()              => dispatch({type : 'RESET'}),
     }
 }
 

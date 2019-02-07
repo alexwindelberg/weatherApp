@@ -1,12 +1,20 @@
 import React, { Component } from 'react';
 import { Button } from 'react-native'
-import { GooglePlacesInput } from '../components/autoComplete';
+import AutoComplete from '../components/AutoComplete';
 
 class SearchCity extends Component {
-    
+    static navigationOptions = {
+            title: 'Search',
+    };
+
+    searchComplete = () => {
+        // send the user back to the main
+        this.props.navigation.goBack();
+    }
+
     render() {
         return (
-            <GooglePlacesInput />
+            <AutoComplete searchCallBack={this.searchComplete}/>
         );
     }
 }

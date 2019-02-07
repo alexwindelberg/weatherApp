@@ -1,6 +1,6 @@
 import React from 'react'
 
-const cityTuple = (props) => {
+const CityTuple = (props) => {
     return (
         <View style={styles.listBox}>
             {this.props.city}
@@ -20,3 +20,5 @@ var styles = StyleSheet.create({
         flexDirection   : 'row',
     }
 });
+
+export default CityTuple

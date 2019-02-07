@@ -9,7 +9,7 @@ class WeatherDetails extends Component {
             <View style={styles.weatherBox}>
                 <View> 
                     <Text style={styles.weatherDetailsBox}>  { Math.ceil(this.props.currentWeather.temp) }° </Text>
-                    <Text style={styles.locationDetails} >  { this.props.currentWeather.city }, { this.props.currentWeather.state }, { this.props.currentWeather.country } </Text>
+                    <Text style={styles.locationDetails}  >  { this.props.currentWeather.city }, { this.props.currentWeather.state }, { this.props.currentWeather.country } </Text>
                 </View>
                 <View>
                     <Image style={{width: 50, height: 50, marginLeft: 100}} source={{uri: "http://openweathermap.org/img/w/" + this.props.currentWeather.icon + ".png" }} />
@@ -47,14 +47,8 @@ var styles = StyleSheet.create({
 const mapStateToProps = state => {
     return {
         current_local   : state.currentLocation,
-        currentWeather  : state.currentFocusedWeather,
+        currentWeather  : state.localWeather,
     };
 };
 
-const mapDispatchToProps = dispatch => {
-    return {
-        retriveCurrentWeather  : () => dispatch({type: 'GET_CURRENT_WEATHER'}),
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(WeatherDetails);
+export default connect(mapStateToProps)(WeatherDetails);

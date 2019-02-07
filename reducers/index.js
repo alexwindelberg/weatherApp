@@ -3,9 +3,17 @@ import { combineReducers } from 'redux'
 const initialState = { 
     isLoading                : true,
     currentLocation          : {},
-    currentFocusedWeather    : {},
+    localWeather             : {},
     weatherList              : [],
+    listCounter              :  1,
 };
+
+/*
+    SET_CURRENT_LOCATION         - Sets the longitude and latitude into currentLocation 
+                                   as an object - {latitude, longitude}
+    ADD_CURRENT_WEATHER_DETAILS  - Sets the weather details into localWeather as an 
+                                   object based on the coordinates of the user - { icon, wId, temp, }
+*/
 
 export default (state = initialState, action) => {
 
@@ -20,20 +28,28 @@ export default (state = initialState, action) => {
                 ...state,
                 currentLocation            : Object.assign({}, action.c_location)
             }
-        case 'ADD_CURRENT_WEATHER_DETAILS' : 
+        case 'ADD_LOCAL_WEATHER_DETAILS' : 
             return {
                 ...state,
-                currentFocusedWeather      : Object.assign({}, action.cl_weather),
+                localWeather               : Object.assign({}, action.cl_weather),
             }
-        case 'ADD_WEATHER_DETAILS_TO_LIST'         :
+        case 'ADD_LOCAL_WEATHER_LIST' : 
             return {
                 ...state,
-                weatherList                : state.weatherList.concat({ uniqueId: new Date(), cityWeather: action.storeCityDetails })
+                weatherList                : state.weatherList.concat({ uniqueId: state.listCounter, cityWeather: Object.assign(state.currentLocation, state.localWeather)}),
+                listCounter                : state.listCounter + 1,
             }
-        case 'DUMMY_DATA'   : {
+        case 'ADD_CITY'         :
             return {
                 ...state,
-                weatherList   :  new Array("New York", "Miami", "Orlando") 
+                weatherList                : state.weatherList.concat({ uniqueId: state.listCounter, cityWeather: action.addCity }),
+                listCounter                : state.listCounter + 1,
+            }
+        case 'RESET'   : {
+            return {
+                ...state,
+                weatherList                : [],
+                listCounter                : 0
             }
         }
     }
