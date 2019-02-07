@@ -9,7 +9,7 @@ class WeatherDetails extends Component {
             <View style={styles.weatherBox}>
                 <View> 
                     <Text style={styles.weatherDetailsBox}>  { Math.ceil(this.props.currentWeather.temp) }° </Text>
-                    <Text style={styles.locationDetails}  >  { this.props.currentWeather.city }, { this.props.currentWeather.state }, { this.props.currentWeather.country } </Text>
+                    <Text style={styles.locationDetails}  >  { this.props.currentWeather.cityInfo } </Text>
                 </View>
                 <View>
                     <Image style={{width: 50, height: 50, marginLeft: 100}} source={{uri: "http://openweathermap.org/img/w/" + this.props.currentWeather.icon + ".png" }} />

@@ -22,15 +22,13 @@ class AutoComplete extends Component {
       return weatherData
     }).finally(results => {
 
-      let cityInfo = description.replace(/[^a-zA-Z ]/g, "").split(" ")
+      let cityInformation = description.replace(/[^a-zA-Z ]/g, "")
       
       const newCity = {
           ...results,
           latitude  : coordinates.lat, 
           longitude : coordinates.lng,
-          city      : cityInfo[0],
-          state     : cityInfo[1],
-          country   : cityInfo[2],
+          cityInfo  : cityInformation
       }
       this.props.addCity(newCity)
       

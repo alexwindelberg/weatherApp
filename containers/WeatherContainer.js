@@ -35,10 +35,6 @@ class WeatherContainer extends Component {
         });
 
         const results = await getWeatherAsync(this.props.current_local.latitude, this.props.current_local.longitude).then((data) => {
-            
-            //const { id }             = data.sys       
-            //const wId                = data.weather[0].id 
-             
             const icon               = data.weather[0].icon   
             const { temp }           = data.main
             const weatherData        = {
@@ -49,14 +45,10 @@ class WeatherContainer extends Component {
         });
 
         await getCityAsync (this.props.current_local.latitude, this.props.current_local.longitude).then((data) => {
-            const city              = data.results[1].address_components[3].long_name
-            const state             = data.results[1].address_components[5].short_name
-            const country           = data.results[1].address_components[6].short_name
+            const cityInfo    = data.results[1].address_components[3].long_name + " " + data.results[1].address_components[5].short_name + " " + data.results[1].address_components[6].short_name;
             const w_details = {
                 ...results,
-                city,
-                state,
-                country
+                cityInfo,
             }
             this.props.addCurrentWeatherDetails(w_details);
         })
@@ -64,7 +56,9 @@ class WeatherContainer extends Component {
     }
 
     sendUserToFocus = (cityTuple) => (
-        this.props.navigation.navigate('Focus')
+        this.props.navigation.navigate('Focus', {
+            cityListIndex : cityTuple
+        })
     )
 
     initialScreen = () => (

@@ -1,7 +1,6 @@
 import { combineReducers } from 'redux'
 //latitude, longitude, 
 const initialState = { 
-    isLoading                : true,
     currentLocation          : {},
     localWeather             : {},
     weatherList              : [],
@@ -18,11 +17,6 @@ const initialState = {
 export default (state = initialState, action) => {
 
     switch (action.type) {
-        case 'SET_LOADING'                 :
-            return {
-                ...state,
-                isLoading                  : !state.isLoading
-            }
         case 'SET_CURRENT_LOCATION'        :
             return {
                 ...state,

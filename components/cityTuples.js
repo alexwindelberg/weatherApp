@@ -17,7 +17,7 @@ class CityTuple extends Component {
                             return (
                                 <View style={styles.TextBox} key={city.uniqueId}>
                                     <Text onPress={() => this.props.focusDetailsCallBack(city.uniqueId)} style={styles.TextStyling}>
-                                        {city.cityWeather.city + " " + city.cityWeather.state + " " + city.cityWeather.country }
+                                        {city.cityWeather.cityInfo}
                                     </Text>
                                     <Text style={styles.TextDegree}>{Math.ceil(city.cityWeather.temp)}°</Text>
                                 </View>
