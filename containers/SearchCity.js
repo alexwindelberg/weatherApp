@@ -8,7 +8,6 @@ class SearchCity extends Component {
     };
 
     searchComplete = () => {
-        // send the user back to the main
         this.props.navigation.goBack();
     }
 

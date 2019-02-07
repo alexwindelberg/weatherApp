@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import { View, Text, StyleSheet, Button } from 'react-native'
 import { connect } from 'react-redux'
-import WeatherDetails from '../components/WeatherDetails'
 import { getLocationAsync, getWeatherAsync, getCityAsync } from '../utils/weatherFuncs'
+import WeatherDetails from '../components/WeatherDetails'
+import CityTuples from '../components/CityTuples'
 
 
 class WeatherContainer extends Component {
@@ -58,8 +59,6 @@ class WeatherContainer extends Component {
                 country
             }
             this.props.addCurrentWeatherDetails(w_details);
-            //this.props.resetData();
-            //this.props.setIsLoading();
         })
 
     }
@@ -67,6 +66,7 @@ class WeatherContainer extends Component {
     initialScreen = () => (
         <View>
             <WeatherDetails />
+            <CityTuples />
         </View>
     )
         
