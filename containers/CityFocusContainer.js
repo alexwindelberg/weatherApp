@@ -8,7 +8,7 @@ class CityWeatherContainer extends Component {
 
     render () {
         return (
-            <Text> </Text>
+            <Text>Hello from City</Text>
         )
     }
 

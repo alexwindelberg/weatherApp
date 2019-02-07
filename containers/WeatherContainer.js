@@ -63,10 +63,14 @@ class WeatherContainer extends Component {
 
     }
 
+    sendUserToFocus = (cityTuple) => (
+        this.props.navigation.navigate('Focus')
+    )
+
     initialScreen = () => (
         <View>
             <WeatherDetails />
-            <CityTuples />
+            <CityTuples focusDetailsCallBack={this.sendUserToFocus} />
         </View>
     )
         

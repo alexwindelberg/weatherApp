@@ -5,10 +5,10 @@ import { connect } from 'react-redux'
 
 class CityTuple extends Component {
 
+    constructor(props) {
+        super(props)
+    }
 
-    // When you click a city take it the details and then show them all the data,
-    // at the top add a button that removes the city from the list and then takens them back the main
-    // view
     render () {
         return (
             <View style={styles.listBox}>
@@ -16,8 +16,8 @@ class CityTuple extends Component {
                         this.props.cityList.map( city => {
                             return (
                                 <View style={styles.TextBox} key={city.uniqueId}>
-                                    <Text style={styles.TextStyling}>
-                                        {city.cityWeather.city + " " + city.cityWeather.state + " " + city.cityWeather.country + "\t" }
+                                    <Text onPress={() => this.props.focusDetailsCallBack(city.uniqueId)} style={styles.TextStyling}>
+                                        {city.cityWeather.city + " " + city.cityWeather.state + " " + city.cityWeather.country }
                                     </Text>
                                     <Text style={styles.TextDegree}>{Math.ceil(city.cityWeather.temp)}°</Text>
                                 </View>
@@ -48,26 +48,20 @@ var styles = StyleSheet.create({
         flexDirection   : 'row',
         justifyContent  : 'space-between',
     },
-    TextStyling        : {
-        textAlign      : 'left',
-        fontSize       : 20,
+    TextStyling         : {
+        textAlign       : 'left',
+        fontSize        : 20,
     },
-    TextDegree         : {
-        textAlign      : 'center',
-        fontSize       : 20,
+    TextDegree          : {
+        textAlign       : 'center',
+        fontSize        : 20,
     }
 });
 
 const mapStateToProps = state => {
     return {
-        cityList      : state.weatherList,
+        cityList        : state.weatherList,
     }
 }
-
-/*const mapDispatchToProps = dispatch => {
-    return {
-        //delete a city
-    }
-}*/
 
 export default connect(mapStateToProps)(CityTuple)

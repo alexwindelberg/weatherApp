@@ -3,9 +3,6 @@ import { Button } from 'react-native'
 import AutoComplete from '../components/AutoComplete';
 
 class SearchCity extends Component {
-    static navigationOptions = {
-            title: 'Search',
-    };
 
     searchComplete = () => {
         this.props.navigation.goBack();
