@@ -1,18 +1,18 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
+import { View, Text, StyleSheet, Image } from 'react-native'
 import { connect } from 'react-redux'
-import { View, Text, StyleSheet, Image } from 'react-native';
 
-class WeatherDetails extends Component {
+class CityWeather extends Component {
 
     render () {
         return (
             <View style={styles.weatherBox}>
                 <View> 
-                    <Text style={styles.weatherDetailsBox}>  { Math.round(this.props.currentWeather.temp) }° </Text>
+                    <Text style={styles.weatherDetailsBox}>  { Math.round(this.props.currentWeather.temp)}° </Text>
                     <Text style={styles.locationDetails}  >  { this.props.currentWeather.cityInfo } </Text>
                 </View>
                 <View>
-                    <Image style={{width: 50, height: 50, marginLeft: 100}} source={{uri: "http://openweathermap.org/img/w/" + this.props.currentWeather.icon + ".png" }} />
+                    <Image style={{width: 80, height: 80, marginLeft: 100}} source={{uri: "http://openweathermap.org/img/w/" + this.props.currentWeather.icon + ".png" }} />
                 </View>
             </View>
         )
@@ -46,9 +46,8 @@ var styles = StyleSheet.create({
 
 const mapStateToProps = state => {
     return {
-        current_local   : state.currentLocation,
-        currentWeather  : state.localWeather,
+        currentWeather  : state.focusedCurrent,
     };
 };
 
-export default connect(mapStateToProps)(WeatherDetails);
+export default connect(mapStateToProps)(CityWeather);

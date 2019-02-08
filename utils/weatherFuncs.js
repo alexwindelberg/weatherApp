@@ -48,7 +48,7 @@ export const getWeatherAsync = async (lat, lon) => {
   Gets the weather for the given day and the rest of the week
 */
 export const getAdditionalWeatherAsync = async (lat, lon) => {
-  const days = 4;
+  const days = 40;
   try {
     const data = await fetch (`http://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&cnt=${days}&APPID=${weather_API}&units=imperial`)
     const response = await data.json();
