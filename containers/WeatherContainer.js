@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet, Button } from 'react-native'
+import { View, Text, StyleSheet, Button, Platform } from 'react-native'
 import { connect } from 'react-redux'
 import { getLocationAsync, getWeatherAsync, getCityAsync } from '../utils/weatherFuncs'
 import WeatherDetails from '../components/WeatherDetails'
@@ -15,7 +15,7 @@ class WeatherContainer extends Component {
                 <Button
                 onPress={() => navigation.navigate('Search')}
                 title="Search"
-                color="#f4511e"
+                color={Platform.OS === 'ios' ? "#fff" : "#f4511e" }
                 />
             ),
         }
