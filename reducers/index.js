@@ -1,13 +1,14 @@
 import { combineReducers } from 'redux'
 //latitude, longitude, 
-const initialState = { 
-    currentLocation          : {},
-    localWeather             : {},
-    weatherList              : [],
-    listCounter              :  1,
-    focusedCity              : [],
-    focusListCounter         :  1,
-    focusedCurrent           :  {}
+const initialState = {
+    isLoading                                  : false, 
+    currentLocation                            : {},
+    localWeather                               : {},
+    weatherList                                : [],
+    listCounter                                :  1,
+    focusedCity                                : [],
+    focusListCounter                           :  1,
+    focusedCurrent                             :  {}
 };
 
 /*
@@ -20,62 +21,67 @@ const initialState = {
 export default (state = initialState, action) => {
 
     switch (action.type) {
-        case 'SET_CURRENT_LOCATION'        :
+        case 'SET_LOADING'                     :
             return {
                 ...state,
-                currentLocation            : Object.assign({}, action.c_location)
+                isLoading                      : !state.isLoading
             }
-        case 'ADD_LOCAL_WEATHER_DETAILS' : 
+        case 'SET_CURRENT_LOCATION'            :
             return {
                 ...state,
-                localWeather               : Object.assign({}, action.cl_weather),
+                currentLocation                : Object.assign({}, action.c_location)
             }
-        case 'ADD_LOCAL_WEATHER_LIST' : 
+        case 'ADD_LOCAL_WEATHER_DETAILS'       : 
             return {
                 ...state,
-                weatherList                : state.weatherList.concat({ uniqueId: state.listCounter, cityWeather: Object.assign(state.currentLocation, state.localWeather)}),
-                listCounter                : state.listCounter + 1,
+                localWeather                   : Object.assign({}, action.cl_weather),
             }
-        case 'ADD_CITY'         :
+        case 'ADD_LOCAL_WEATHER_LIST'          : 
             return {
                 ...state,
-                weatherList                : state.weatherList.concat({ uniqueId: state.listCounter, cityWeather: action.addCity }),
-                listCounter                : state.listCounter + 1,
+                weatherList                    : state.weatherList.concat({ uniqueId: state.listCounter, cityWeather: Object.assign(state.currentLocation, state.localWeather)}),
+                listCounter                    : state.listCounter + 1,
             }
-        case 'FOCUSED_CITY'     :
+        case 'ADD_CITY'                        :
             return {
                 ...state,
-                focusedCity     :       state.focusedCity.concat({ uniqueId: state.focusListCounter, cityWeather : Object.assign({}, action.cityinfo)}),
-                focusListCounter:       state.focusListCounter + 1,
+                weatherList                    : state.weatherList.concat({ uniqueId: state.listCounter, cityWeather: action.addCity }),
+                listCounter                    : state.listCounter + 1,
             }
-        case 'FOCUSED_CURRENT'  :
+        case 'FOCUSED_CITY'                    :
             return {
                 ...state,
-                focusedCurrent   :      Object.assign({}, action.cFocused),
+                focusedCity                    :       state.focusedCity.concat({ uniqueId: state.focusListCounter, cityWeather : Object.assign({}, action.cityinfo)}),
+                focusListCounter               :       state.focusListCounter + 1,
+            }
+        case 'FOCUSED_CURRENT'                 :
+            return {
+                ...state,
+                focusedCurrent                 :      Object.assign({}, action.cFocused),
             }
         case 'DELETE_CITY'   : { // delete city tuple
                 return {
                     ...state,
-                    focusedCity           : [],
-                    focusListCounter      : 0,
+                    focusedCity                : [],
+                    focusListCounter           : 0,
                 }
             }
-        case 'CLEAR_CITY_DATA'   : {
+        case 'CLEAR_CITY_DATA'                 : {
                 return {
                     ...state,
-                    focusedCity          : [],
-                    focusListCounter      : 0,
+                    focusedCity                : [],
+                    focusListCounter           : 0,
                 }
             }
-        case 'RESET'   : {
+        case 'RESET'                           : {
             return {
-                currentLocation          : {},
-                localWeather             : {},
-                weatherList              : [],
-                listCounter              :  1,
-                focusedCity              : [],
-                focusListCounter         :  1,
-                focusedCurrent           :  {},
+                currentLocation                : {},
+                localWeather                   : {},
+                weatherList                    : [],
+                listCounter                    :  1,
+                focusedCity                    : [],
+                focusListCounter               :  1,
+                focusedCurrent                 :  {},
             }
         }
     }

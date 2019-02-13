@@ -25,6 +25,7 @@ class WeatherContainer extends Component {
 
         // If the page is reloaded redux remembers we have to find out if we have reloaded and reset 
         // loading
+        //this.props.resetData();
         await getLocationAsync().then(d => {
             const { latitude, longitude } = d.coords;
             const coordinates = {
@@ -72,14 +73,8 @@ class WeatherContainer extends Component {
 
         return (    
             <View style={styles.content}>
-                { this.props.loading ? 
-                    (
-                        <Text>Loading...</Text>
-                    ) 
-                        : 
-                    (
-                        this.initialScreen()
-                    )
+                {
+                    this.initialScreen()
                 }
             </View>
         );

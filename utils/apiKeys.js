@@ -1,4 +1,4 @@
 
-export const google_API = 'YOUR API KEY HERE';
+export const google_API = 'GOOGLE CLOUD API KEY';
 
-export const weather_API = 'YOUR OPEN WEATHER KEY HERE';
+export const weather_API = 'OPENWEATHER API KEY';

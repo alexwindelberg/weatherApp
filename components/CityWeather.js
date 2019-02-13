@@ -2,6 +2,10 @@ import React, { Component } from 'react'
 import { View, Text, StyleSheet, Image } from 'react-native'
 import { connect } from 'react-redux'
 
+/*
+    This is the component that will display the weather for the city in focus
+    but for today.
+*/
 class CityWeather extends Component {
 
     render () {
