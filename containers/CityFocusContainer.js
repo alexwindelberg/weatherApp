@@ -3,18 +3,17 @@ import { connect } from 'react-redux'
 import { getWeatherAsync, getAdditionalWeatherAsync } from '../utils/weatherFuncs'
 import CityWeather from '../components/CityWeather'
 import WeatherForDays from '../components/WeatherForDays'
-
-import { View, Text, StyleSheet, Button } from 'react-native'
+import { View, Text } from 'react-native'
+import GoogleMap from '../components/googleMap';
 
 
 class CityWeatherContainer extends Component {
-
 
     async componentDidMount () {
         
         this.props.setLoading()
         const { navigation } = this.props
-        const cityIndex = navigation.getParam('cityListIndex', 'NO-ID')
+        const cityIndex = navigation.getParam('cityListIndex', 'NO-ID') 
         const focusedCity = this.props.cityList[cityIndex - 1]
         const highNoon = "12:00:00"
 
@@ -37,7 +36,6 @@ class CityWeatherContainer extends Component {
                 const time = listItem["dt_txt"].split(" ")[1]
                 const date = new Date(listItem["dt_txt"].split(" ")[0])
                 const objDate = date.getDay()
-
                 if(time.includes(highNoon)) {
                     const { icon } = listItem.weather[0]
                     const { temp } = listItem.main
@@ -60,7 +58,10 @@ class CityWeatherContainer extends Component {
             <View>
                  <CityWeather />
                  {
-                     this.props.loading ? <Text>loading....</Text> : <WeatherForDays/>
+                    this.props.loading ? <Text>loading....</Text> : <WeatherForDays/>
+                 }
+                 {
+                    this.props.loading ? <Text>loading....</Text> : <GoogleMap />
                  }
             </View>
 

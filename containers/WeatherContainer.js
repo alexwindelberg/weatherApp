@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet, Button, Platform } from 'react-native'
+import { View, StyleSheet, Button, Platform } from 'react-native'
 import { connect } from 'react-redux'
 import { getLocationAsync, getWeatherAsync, getCityAsync } from '../utils/weatherFuncs'
 import WeatherDetails from '../components/WeatherDetails'

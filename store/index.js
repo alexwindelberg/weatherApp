@@ -12,6 +12,6 @@ import reducer from '../reducers'
 
   const persistedReducer = persistReducer(persistConfig, reducer)
    
-  export const store = createStore(persistedReducer); // applyMiddleware(logger)
+  export const store = createStore(persistedReducer, applyMiddleware(logger)); // applyMiddleware(logger)
   
   export const persistor = persistStore(store);

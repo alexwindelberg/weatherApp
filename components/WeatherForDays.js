@@ -3,12 +3,6 @@ import { View, Text, StyleSheet, Image, ScrollView } from 'react-native'
 import { connect } from 'react-redux'
 
 class WeatherForDays extends Component {
-
-
-    componentWillMount() {
-
-        //Math.round(this.props.currentWeather.temp)° this.props.currentWeather.cityInfo }
-    }
     
     componentWillUnmount() {
         this.props.resetData()

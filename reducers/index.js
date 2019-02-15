@@ -1,14 +1,13 @@
-import { combineReducers } from 'redux'
 //latitude, longitude, 
 const initialState = {
     isLoading                                  : false, 
     currentLocation                            : {},
     localWeather                               : {},
     weatherList                                : [],
-    listCounter                                :  1,
+    listCounter                                : 1,
     focusedCity                                : [],
-    focusListCounter                           :  1,
-    focusedCurrent                             :  {}
+    focusListCounter                           : 1,
+    focusedCurrent                             : {},
 };
 
 /*
@@ -47,43 +46,46 @@ export default (state = initialState, action) => {
                 ...state,
                 weatherList                    : state.weatherList.concat({ uniqueId: state.listCounter, cityWeather: action.addCity }),
                 listCounter                    : state.listCounter + 1,
+                focusIndex                     : state.focusIndex + 1,
             }
         case 'FOCUSED_CITY'                    :
             return {
                 ...state,
-                focusedCity                    :       state.focusedCity.concat({ uniqueId: state.focusListCounter, cityWeather : Object.assign({}, action.cityinfo)}),
-                focusListCounter               :       state.focusListCounter + 1,
+                focusedCity                    : state.focusedCity.concat({ uniqueId: state.focusListCounter, cityWeather : Object.assign({}, action.cityinfo)}),
+                focusListCounter               : state.focusListCounter + 1,
             }
         case 'FOCUSED_CURRENT'                 :
             return {
                 ...state,
-                focusedCurrent                 :      Object.assign({}, action.cFocused),
+                focusedCurrent                 : Object.assign({}, action.cFocused),
             }
-        case 'DELETE_CITY'   : { // delete city tuple
-                return {
-                    ...state,
-                    focusedCity                : [],
-                    focusListCounter           : 0,
-                }
-            }
-        case 'CLEAR_CITY_DATA'                 : {
-                return {
-                    ...state,
-                    focusedCity                : [],
-                    focusListCounter           : 0,
-                }
-            }
-        case 'RESET'                           : {
+        case 'DELETE_CITY'                     : 
             return {
+                ...state,
+                focusedCity                    : [],
+                focusListCounter               : 1,
+            }
+        case 'CLEAR_CITY_DATA'                 : 
+            return {
+                ...state,
+                focusedCity                    : [],
+                focusListCounter               : 1,
+                focusIndex                     : 1,
+            }
+        case 'RESET'                           : 
+            return {
+                isLoading                      : false,
                 currentLocation                : {},
                 localWeather                   : {},
                 weatherList                    : [],
-                listCounter                    :  1,
+                listCounter                    : 1,
                 focusedCity                    : [],
-                focusListCounter               :  1,
-                focusedCurrent                 :  {},
+                focusListCounter               : 1,
+                focusedCurrent                 : {},
+                focusIndex                     : 1,
             }
-        }
+        default : 
+            console.log('ERROR NO MATCH')
     }
 
     return state;

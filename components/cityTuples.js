@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet, Slider } from 'react-native'
+import { View, Text, StyleSheet} from 'react-native'
 import { connect } from 'react-redux'
 
 
