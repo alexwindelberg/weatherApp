@@ -8,6 +8,7 @@ const initialState = {
     focusedCity                                : [],
     focusListCounter                           : 1,
     focusedCurrent                             : {},
+    iteratorFocus                              : 1,
 };
 
 /*
@@ -46,7 +47,11 @@ export default (state = initialState, action) => {
                 ...state,
                 weatherList                    : state.weatherList.concat({ uniqueId: state.listCounter, cityWeather: action.addCity }),
                 listCounter                    : state.listCounter + 1,
-                focusIndex                     : state.focusIndex + 1,
+            }
+        case 'GET_FOCUS_INDEX'                 :
+            return {
+                ...state,
+                iteratorFocus                  : action.indexParam,
             }
         case 'FOCUSED_CITY'                    :
             return {
@@ -70,7 +75,6 @@ export default (state = initialState, action) => {
                 ...state,
                 focusedCity                    : [],
                 focusListCounter               : 1,
-                focusIndex                     : 1,
             }
         case 'RESET'                           : 
             return {
@@ -82,7 +86,6 @@ export default (state = initialState, action) => {
                 focusedCity                    : [],
                 focusListCounter               : 1,
                 focusedCurrent                 : {},
-                focusIndex                     : 1,
             }
         default : 
             console.log('ERROR NO MATCH')

@@ -6,22 +6,21 @@ import { connect } from 'react-redux'
 
 class GoogleMap extends Component {
 
-    componentDidMount () {
-        console.log("this is cIndex " + this.props.cIndex)
-    }
-
     render() {
-        return (
+        const index = this.props.cIndex - 1
+        const lat = this.props.cityList[index].cityWeather.latitude;
+        const lon = this.props.cityList[index].cityWeather.longitude;
+        return ( 
                 <ScrollView style={styles.mapContainer}>
-                        <MapView
+                            <MapView
                                 style={ styles.mapContainer }
                                 initialRegion={{
-                                latitude: 37.78825,
-                                longitude: -122.4324,
+                                latitude: lat,
+                                longitude: lon,
                                 latitudeDelta: 0.0922,
                                 longitudeDelta: 0.0421,
                                 }}
-                        />
+                            />
                 </ScrollView>
         )
     }
@@ -37,9 +36,8 @@ var styles = StyleSheet.create({
 
 const mapStateToProps = state => {
     return {
-        focusedCity      : state.focusedCurrent,
         cityList         : state.weatherList,
-        cIndex           : state.focusIndex
+        cIndex           : state.iteratorFocus,
     }
 }
 

@@ -16,6 +16,7 @@ class CityWeatherContainer extends Component {
         const cityIndex = navigation.getParam('cityListIndex', 'NO-ID') 
         const focusedCity = this.props.cityList[cityIndex - 1]
         const highNoon = "12:00:00"
+        this.props.focusIndexSet(cityIndex);
 
         await getWeatherAsync(focusedCity.cityWeather.latitude, focusedCity.cityWeather.longitude).then((data) => {
             const icon               = data.weather[0].icon   
@@ -84,6 +85,7 @@ const mapDispatchToProps = dispatch => {
         storeCityInFocus : (cityI)          => dispatch ({type : 'FOCUSED_CITY', cityinfo : cityI }),
         storeFocusC      : (focusedCurrent) => dispatch ({type : 'FOCUSED_CURRENT', cFocused : focusedCurrent}),
         resetData        : ()               => dispatch ({type : 'CLEAR_CITY_DATA'}),
+        focusIndexSet    : (f_index)        => dispatch ({type : 'GET_FOCUS_INDEX', indexParam : f_index}),
     }
 }
 
